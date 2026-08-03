@@ -22,7 +22,7 @@
         <li><a href="#contact">Contact us</a></li>
         <li><a href="#about">About us</a></li>
         <li><a href="#tests">Tests</a></li>
-        <li><a href="#results">Results</a></li>
+        <li><a href="#track">Results</a></li>
       </ul>
     </nav>
     <button class="btn btn-primary">Book a Test</button>
@@ -39,7 +39,7 @@
         <p>Book a test, follow a simple four-step process from sample to report, and read a new scientific insight every day.</p>
         <div class="hero-actions">
           <button class="btn btn-primary">Book a test</button>
-          <button class="btn btn-ghost">View my results</button>
+          <a href="#track"><button class="btn btn-ghost">View my results</button></a>
         </div>
       </div>
       <div class="hero-art">
@@ -51,16 +51,16 @@
             <rect x="0" y="150" width="200" height="16" rx="8" fill="#1B3B6F"/>
             <!-- tube 1 -->
             <rect x="18" y="40" width="26" height="120" rx="13" fill="#FFFFFF" stroke="#DCE7F5" stroke-width="3"/>
-            <rect x="18" y="95" width="26" height="65" rx="13" fill="#4E8FE0"/>
+            <rect class="liquid" x="18" y="95" width="26" height="65" rx="13" fill="#4E8FE0"/>
             <!-- tube 2 -->
             <rect x="60" y="10" width="26" height="150" rx="13" fill="#FFFFFF" stroke="#DCE7F5" stroke-width="3"/>
-            <rect x="60" y="80" width="26" height="80" rx="13" fill="#E86A4A"/>
+            <rect class="liquid" x="60" y="80" width="26" height="80" rx="13" fill="#E86A4A"/>
             <!-- tube 3 -->
             <rect x="102" y="55" width="26" height="105" rx="13" fill="#FFFFFF" stroke="#DCE7F5" stroke-width="3"/>
-            <rect x="102" y="100" width="26" height="60" rx="13" fill="#6C63C9"/>
+            <rect class="liquid" x="102" y="100" width="26" height="60" rx="13" fill="#6C63C9"/>
             <!-- tube 4 -->
             <rect x="144" y="30" width="26" height="130" rx="13" fill="#FFFFFF" stroke="#DCE7F5" stroke-width="3"/>
-            <rect x="144" y="90" width="26" height="70" rx="13" fill="#F2B84A"/>
+            <rect class="liquid" x="144" y="90" width="26" height="70" rx="13" fill="#F2B84A"/>
             <!-- microscope silhouette -->
             <g transform="translate(60,-30)">
               <rect x="0" y="55" width="70" height="8" rx="4" fill="#1B3B6F"/>
@@ -95,10 +95,39 @@
   <!-- Quick test panels -->
   <div class="wrap panels-strip">
     <div class="panels">
-      <div class="panel"><div class="ico">🩸</div><h4>Blood Analysis</h4></div>
-      <div class="panel"><div class="ico">🧫</div><h4>Microbiology</h4></div>
-      <div class="panel"><div class="ico">🧬</div><h4>Genetic Testing</h4></div>
-      <div class="panel"><div class="ico">🏠</div><h4>Home Collection</h4></div>
+      <div class="panel">
+        <div class="ico">🩸</div>
+        <h4>Blood Analysis</h4>
+        <p class="detail">Results in ~6h · venous draw</p>
+      </div>
+      <div class="panel">
+        <div class="ico">🧫</div>
+        <h4>Microbiology</h4>
+        <p class="detail">Results in 24–72h · culture-based</p>
+      </div>
+      <div class="panel">
+        <div class="ico">🧬</div>
+        <h4>Genetic Testing</h4>
+        <p class="detail">Results in 5–10 days · saliva or blood</p>
+      </div>
+      <div class="panel">
+        <div class="ico">🏠</div>
+        <h4>Home Collection</h4>
+        <p class="detail">Nurse arrives within 2h slot</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCREDITATION STRIP -->
+  <div class="accred-strip">
+    <div class="wrap accred-row">
+      <span>ISO 15189:2022 ACCREDITED</span>
+      <span class="dash">/</span>
+      <span>MINISTRY OF HEALTH LICENSED</span>
+      <span class="dash">/</span>
+      <span>EXTERNAL QUALITY ASSURANCE PARTICIPANT</span>
+      <span class="dash">/</span>
+      <span>UNBROKEN SAMPLE CHAIN OF CUSTODY</span>
     </div>
   </div>
 
@@ -135,13 +164,53 @@
     </div>
   </section>
 
+  <!-- LIVE SAMPLE TRACKER (signature element) -->
+  <section class="tracker-section" id="track">
+    <div class="wrap tracker-grid">
+      <div class="tracker-copy">
+        <span class="eyebrow" style="color:rgba(255,255,255,.65);">live status</span>
+        <h2>Where's my sample?</h2>
+        <p>Enter the order number from your receipt to follow it through every stage of analysis, updated in real time.</p>
+        <div class="tracker-input-row">
+          <input type="text" id="trackInput" placeholder="e.g. BL-240815" maxlength="14" autocomplete="off">
+          <button class="btn btn-amber" id="trackBtn" type="button">Track</button>
+        </div>
+        <p class="tracker-hint" id="trackHint">This is a live preview of the tracker — try any order number.</p>
+      </div>
+
+      <div class="tracker-monitor" id="trackerMonitor" aria-live="polite">
+        <div class="monitor-line" id="monitorLine"></div>
+        <div class="stage" data-stage="1">
+          <div class="stage-dot"></div>
+          <span class="stage-label">Received</span>
+          <span class="stage-time">—</span>
+        </div>
+        <div class="stage" data-stage="2">
+          <div class="stage-dot"></div>
+          <span class="stage-label">Processing</span>
+          <span class="stage-time">—</span>
+        </div>
+        <div class="stage" data-stage="3">
+          <div class="stage-dot"></div>
+          <span class="stage-label">Verified</span>
+          <span class="stage-time">—</span>
+        </div>
+        <div class="stage" data-stage="4">
+          <div class="stage-dot"></div>
+          <span class="stage-label">Ready</span>
+          <span class="stage-time">—</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Results speed strip -->
   <div class="results-strip">
     <div class="wrap results-grid">
-      <div><div class="num">98%</div><div class="lbl">Accuracy rate</div></div>
-      <div><div class="num">24h</div><div class="lbl">Average turnaround</div></div>
-      <div><div class="num">40+</div><div class="lbl">Test panels offered</div></div>
-      <div><div class="num">12</div><div class="lbl">Collection centers</div></div>
+      <div><div class="num" data-target="98" data-suffix="%">0%</div><div class="lbl">Accuracy rate</div></div>
+      <div><div class="num" data-target="24" data-suffix="h">0h</div><div class="lbl">Average turnaround</div></div>
+      <div><div class="num" data-target="40" data-suffix="+">0+</div><div class="lbl">Test panels offered</div></div>
+      <div><div class="num" data-target="12" data-suffix="">0</div><div class="lbl">Collection centers</div></div>
     </div>
   </div>
 
@@ -226,6 +295,94 @@
   document.getElementById('articleExcerpt').textContent = today.excerpt;
   document.getElementById('articleAuthor').textContent = "بقلم " + today.author;
   document.getElementById('articleDate').textContent = now.toLocaleDateString('ar-DZ', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  // ---------- Animated result counters ----------
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nums = document.querySelectorAll('.results-grid .num');
+
+  function animateCount(el){
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    if(reduceMotion){ el.textContent = target + suffix; return; }
+    const duration = 1100;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if(p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if('IntersectionObserver' in window){
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          animateCount(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    nums.forEach(n => obs.observe(n));
+  } else {
+    nums.forEach(animateCount);
+  }
+
+  // ---------- Live sample tracker (demo) ----------
+  const trackBtn = document.getElementById('trackBtn');
+  const trackInput = document.getElementById('trackInput');
+  const trackHint = document.getElementById('trackHint');
+  const monitor = document.getElementById('trackerMonitor');
+  const stages = Array.from(monitor.querySelectorAll('.stage'));
+  const monitorLine = document.getElementById('monitorLine');
+  let tracking = false;
+
+  function resetStages(){
+    stages.forEach(s => s.classList.remove('active','done'));
+    stages.forEach(s => s.querySelector('.stage-time').textContent = '—');
+    monitorLine.style.width = '0%';
+  }
+
+  function runTracking(){
+    if(tracking) return;
+    const value = trackInput.value.trim();
+    if(!value){
+      trackHint.textContent = 'Enter an order number first — e.g. BL-240815.';
+      trackInput.focus();
+      return;
+    }
+    tracking = true;
+    resetStages();
+    trackHint.textContent = 'Tracking order ' + value.toUpperCase() + ' …';
+    trackBtn.disabled = true;
+
+    const stepDelay = reduceMotion ? 0 : 700;
+    const timeStamps = ['08:12', '09:40', '13:05', '15:30'];
+
+    stages.forEach((stage, i) => {
+      setTimeout(() => {
+        stages.forEach(s => s.classList.remove('active'));
+        if(i > 0) stages[i-1].classList.add('done');
+        stage.classList.add('active');
+        stage.querySelector('.stage-time').textContent = timeStamps[i];
+        monitorLine.style.width = (i / (stages.length - 1) * 100) + '%';
+
+        if(i === stages.length - 1){
+          setTimeout(() => {
+            stage.classList.remove('active');
+            stage.classList.add('done');
+            trackHint.textContent = 'Your report for ' + value.toUpperCase() + ' is ready.';
+            trackBtn.disabled = false;
+            tracking = false;
+          }, stepDelay + 300);
+        }
+      }, i * (stepDelay + 300));
+    });
+  }
+
+  trackBtn.addEventListener('click', runTracking);
+  trackInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') runTracking(); });
 </script>
 
 </body>

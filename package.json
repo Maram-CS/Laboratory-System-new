@@ -1,26 +1,33 @@
 {
   "name": "laboratory-system",
   "version": "1.0.0",
+  "description": "��#\u0000 \u0000L\u0000a\u0000b\u0000o\u0000r\u0000a\u0000t\u0000o\u0000r\u0000y\u0000-\u0000S\u0000y\u0000s\u0000t\u0000e\u0000m\u0000\r\u0000 \u0000",
+  "homepage": "https://github.com/Maram-CS/Laboratory-System#readme",
+  "bugs": {
+    "url": "https://github.com/Maram-CS/Laboratory-System/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maram-CS/Laboratory-System.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node App.js",
     "dev": "nodemon App.js"
   },
-  "type": "module",
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
     "mysql": "^2.18.1",
-    "mysql2": "^3.23.2",
-    "nodemon": "^3.1.14"
+    "mysql2": "^3.23.2"
   },
   "devDependencies": {
-    "nodemodule": "^0.3.0"
+    "nodemon": "^3.1.14"
   }
 }
