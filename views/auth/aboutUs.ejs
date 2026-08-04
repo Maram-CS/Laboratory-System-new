@@ -246,26 +246,38 @@
         <ul class="map-details">
           <li>
             <span class="map-ico">📍</span>
-            <div><strong>Address</strong><span>Rue Aouati Mostefa, Sétif 19000, Algeria</span></div>
+            <div><strong>Address</strong><span><%= labInfo.address %></span></div>
           </li>
           <li>
             <span class="map-ico">🕘</span>
-            <div><strong>Opening hours</strong><span>Sat – Thu, 7:30 AM – 6:00 PM</span></div>
+            <div><strong>Opening hours</strong><span><%= labInfo.opening_hours %></span></div>
           </li>
           <li>
             <span class="map-ico">📞</span>
-            <div><strong>Phone</strong><span>+213 36 00 00 00</span></div>
+            <div><strong>Phone</strong><span><%= labInfo.phone %></span></div>
           </li>
         </ul>
-        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=S%C3%A9tif%2C%20Algeria" target="_blank" rel="noopener">Get directions</a>
+        <a
+          class="btn btn-primary"
+          href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(labInfo.map_query) %>"
+          target="_blank"
+          rel="noopener">
+          Get directions
+</a>
       </div>
       <div class="map-frame">
-        <iframe
-          title="BioLab Diagnostics location map"
-          src="https://www.google.com/maps?q=S%C3%A9tif%2C%20Algeria&output=embed"
-          width="100%" height="100%" style="border:0;" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+        <div class="map-frame">
+    <iframe
+        id="labMapFrame"
+        title="BioLab Diagnostics location map"
+        src="https://www.google.com/maps?q=<%= encodeURIComponent(labInfo.map_query) %>&output=embed"
+        width="100%"
+        height="100%"
+        style="border:0;"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
       </div>
     </div>
   </section>
@@ -376,6 +388,9 @@
   }
   resetTimer();
 </script>
+
+
+
 
 </body>
 </html>

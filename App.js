@@ -7,6 +7,7 @@ import config_DB from "./Configuration/ConfigDB.js";
 import router from "./Router/Public.js";
 import contactRouter from "./Router/createContact.js";
 import infoLabRouter from "./Router/LabIfo.js";
+import labInfoRouter from "./Router/aboutUs.js";
 
 import { config } from "dotenv";
 
@@ -29,6 +30,7 @@ App.use(express.static(join(__dirname, "/public")));
 App.use("/",router);
 App.use("/contact",contactRouter);
 App.use("/lab-info",infoLabRouter);
+App.use("/",labInfoRouter);
 
 App.listen(Port,()=>{
     console.log(`Server is running on port: ${Port}`);
