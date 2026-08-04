@@ -1,184 +1,586 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Us — BioLab Diagnostics</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=IBM+Plex+Sans+Arabic:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style/contactUs.css">
-<script src="config.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact Us — BioLab Diagnostics</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=IBM+Plex+Sans+Arabic:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="/style/contactUs.css">
 </head>
+
 <body>
 
 <header>
-  <div class="wrap nav">
-    <div class="logo">
-      <div class="logo-mark">⚗</div>
-      <span>BIOLAB<small>DIAGNOSTICS</small></span>
+
+    <div class="wrap nav">
+
+        <div class="logo">
+
+            <div class="logo-mark">
+                ⚗
+            </div>
+
+            <span>
+                BIOLAB
+                <small>DIAGNOSTICS</small>
+            </span>
+
+        </div>
+
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="/home">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/contactUs" class="active">
+                        Contact us
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/AboutUs">
+                        About us
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#tests">
+                        Tests
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#results">
+                        Results
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <button
+            class="btn btn-primary"
+            type="button"
+        >
+            Book a Test
+        </button>
+
     </div>
-    <nav>
-      <ul>
-        <li><a href="/home">Home</a></li>
-        <li><a href="/contactUs" class="active">Contact us</a></li>
-        <li><a href="/AboutUs">About us</a></li>
-        <li><a href="#tests">Tests</a></li>
-        <li><a href="#results">Results</a></li>
-      </ul>
-    </nav>
-    <button class="btn btn-primary">Book a Test</button>
-  </div>
+
 </header>
+
+
 <main>
- 
-  <!-- PAGE HERO -->
-  <section class="page-hero">
-    <div class="wrap">
-      <div class="breadcrumb"><a href="/home">Home</a><span class="sep">/</span><span class="here">Contact us</span></div>
-      <span class="eyebrow">Get in touch</span>
-      <h1>We're here to help</h1>
-      <p>Questions about a test, a result, or booking a home collection? Reach our team directly or drop by the lab.</p>
-    </div>
-  </section>
- 
-  <!-- QUICK CONTACT CARDS -->
-  <section class="contact-cards">
-    <div class="wrap cards-grid">
-      <a class="c-card" id="cardCall" href="tel:" >
-        <div class="ico">📞</div>
-        <h4>Call us</h4>
-        <span id="cardPhone">—</span>
-      </a>
-      <a class="c-card" id="cardEmail" href="mailto:">
-        <div class="ico">✉️</div>
-        <h4>Email us</h4>
-        <span id="cardEmailText">—</span>
-      </a>
-      <div class="c-card">
-        <div class="ico">🕘</div>
-        <h4>Opening hours</h4>
-        <span id="cardHours">—</span>
-      </div>
-    </div>
-  </section>
- 
-  <!-- FORM + MAP -->
-  <section class="contact-main">
-    <div class="wrap contact-grid">
- 
-      <form class="contact-form" id="contactForm">
-        <h3>Send us a message</h3>
-        <p>We usually reply within one business day.</p>
- 
-        <div class="form-row">
-          <div class="form-field">
-            <label>Full name</label>
-            <input type="text" required placeholder="Your name">
-          </div>
-          <div class="form-field">
-            <label>Phone</label>
-            <input type="tel" required placeholder="0X XX XX XX XX">
-          </div>
+
+
+    <!-- PAGE HERO -->
+
+    <section class="page-hero">
+
+        <div class="wrap">
+
+            <div class="breadcrumb">
+
+                <a href="/home">
+                    Home
+                </a>
+
+                <span class="sep">
+                    /
+                </span>
+
+                <span class="here">
+                    Contact us
+                </span>
+
+            </div>
+
+
+            <span class="eyebrow">
+                Get in touch
+            </span>
+
+
+            <h1>
+                We're here to help
+            </h1>
+
+
+            <p>
+                Questions about a test, a result, or booking a home collection?
+                Reach our team directly or drop by the lab.
+            </p>
+
         </div>
- 
-        <div class="form-field">
-          <label>Email</label>
-          <input type="email" required placeholder="you@example.com">
+
+    </section>
+
+
+    <!-- QUICK CONTACT CARDS -->
+
+    <section class="contact-cards">
+
+        <div class="wrap cards-grid">
+
+
+            <!-- CALL US -->
+
+            <a
+                class="c-card"
+                id="cardCall"
+                href="tel:<%= labInfo.phone %>"
+            >
+
+                <div class="ico">
+                    📞
+                </div>
+
+                <h4>
+                    Call us
+                </h4>
+
+                <span id="cardPhone">
+                    <%= labInfo.phone %>
+                </span>
+
+            </a>
+
+
+            <!-- EMAIL US -->
+
+            <a
+                class="c-card"
+                id="cardEmail"
+                href="mailto:<%= labInfo.email %>"
+            >
+
+                <div class="ico">
+                    ✉️
+                </div>
+
+                <h4>
+                    Email us
+                </h4>
+
+                <span id="cardEmailText">
+                    <%= labInfo.email %>
+                </span>
+
+            </a>
+
+
+            <!-- OPENING HOURS -->
+
+            <div class="c-card">
+
+                <div class="ico">
+                    🕘
+                </div>
+
+                <h4>
+                    Opening hours
+                </h4>
+
+                <span id="cardHours">
+                    <%= labInfo.opening_hours %>
+                </span>
+
+            </div>
+
         </div>
- 
-        <div class="form-field">
-          <label>Subject</label>
-          <select>
-            <option>General question</option>
-            <option>Test booking</option>
-            <option>Result inquiry</option>
-            <option>Home collection</option>
-          </select>
+
+    </section>
+
+
+    <!-- FORM + MAP -->
+
+    <section class="contact-main">
+
+        <div class="wrap contact-grid">
+
+
+            <!-- CONTACT FORM -->
+
+            <form
+                class="contact-form"
+                action="/contact/create"
+                method="POST"
+            >
+
+                <h3>
+                    Send us a message
+                </h3>
+
+
+                <p>
+                    We usually reply within one business day.
+                </p>
+
+
+                <div class="form-row">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-field">
+
+                        <label for="full_name">
+                            Full name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            required
+                            placeholder="Your name"
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-field">
+
+                        <label for="phone">
+                            Phone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            required
+                            placeholder="0X XX XX XX XX"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-field">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="you@example.com"
+                    >
+
+                </div>
+
+
+                <!-- SUBJECT -->
+
+                <div class="form-field">
+
+                    <label for="subject">
+                        Subject
+                    </label>
+
+                    <select
+                        id="subject"
+                        name="subject"
+                        required
+                    >
+
+                        <option value="General question">
+                            General question
+                        </option>
+
+                        <option value="Test booking">
+                            Test booking
+                        </option>
+
+                        <option value="Result inquiry">
+                            Result inquiry
+                        </option>
+
+                        <option value="Home collection">
+                            Home collection
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div class="form-field">
+
+                    <label for="message">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        required
+                        placeholder="How can we help?"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Send message
+                </button>
+
+
+                <p class="form-note">
+                    By sending this form you agree to be contacted
+                    about your inquiry.
+                </p>
+
+            </form>
+
+
+            <!-- LOCATION PANEL -->
+
+            <div class="location-panel">
+
+
+                <div class="location-info">
+
+                    <h3>
+                        Visit our main lab
+                    </h3>
+
+
+                    <ul class="map-details">
+
+
+                        <!-- ADDRESS -->
+
+                        <li>
+
+                            <span class="map-ico">
+                                📍
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Address
+                                </strong>
+
+                                <span id="labAddress">
+                                    <%= labInfo.address %>
+                                </span>
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- OPENING HOURS -->
+
+                        <li>
+
+                            <span class="map-ico">
+                                🕘
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Opening hours
+                                </strong>
+
+                                <span id="labHours">
+                                    <%= labInfo.opening_hours %>
+                                </span>
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- PHONE -->
+
+                        <li>
+
+                            <span class="map-ico">
+                                📞
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Phone
+                                </strong>
+
+                                <span id="labPhone">
+                                    <%= labInfo.phone %>
+                                </span>
+
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+
+                    <!-- GET DIRECTIONS -->
+
+                    <a
+                        class="btn btn-primary"
+                        id="labDirectionsBtn"
+                        href="#"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Get directions
+                    </a>
+
+                </div>
+
+
+                <!-- MAP -->
+
+                <div class="map-frame">
+
+                    <iframe
+                        id="labMapFrame"
+                        title="BioLab Diagnostics location map"
+                        src=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    >
+                    </iframe>
+
+                </div>
+
+            </div>
+
         </div>
- 
-        <div class="form-field">
-          <label>Message</label>
-          <textarea required placeholder="How can we help?"></textarea>
-        </div>
- 
-        <button type="submit" class="btn btn-primary">Send message</button>
-        <div class="form-success" id="formSuccess">✓ Your message has been sent — we'll get back to you soon.</div>
-        <p class="form-note">By sending this form you agree to be contacted about your inquiry.</p>
-      </form>
- 
-      <div class="location-panel">
-        <div class="location-info">
-          <h3>Visit our main lab</h3>
-          <ul class="map-details">
-            <li>
-              <span class="map-ico">📍</span>
-              <div><strong>Address</strong><span id="labAddress">—</span></div>
-            </li>
-            <li>
-              <span class="map-ico">🕘</span>
-              <div><strong>Opening hours</strong><span id="labHours">—</span></div>
-            </li>
-            <li>
-              <span class="map-ico">📞</span>
-              <div><strong>Phone</strong><span id="labPhone">—</span></div>
-            </li>
-          </ul>
-          <a class="btn btn-primary" id="labDirectionsBtn" href="#" target="_blank" rel="noopener">Get directions</a>
-        </div>
-        <div class="map-frame">
-          <iframe
-            id="labMapFrame"
-            title="BioLab Diagnostics location map"
-            src=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
-      </div>
- 
-    </div>
-  </section>
- 
+
+    </section>
+
 </main>
- 
+
+
+<!-- FOOTER -->
+
 <footer>
-  <div class="wrap foot-grid">
-    <div class="logo">
-      <div class="logo-mark">⚗</div>
-      <span>BIOLAB<small style="color:rgba(255,255,255,0.7)">DIAGNOSTICS</small></span>
+
+    <div class="wrap foot-grid">
+
+
+        <div class="logo">
+
+            <div class="logo-mark">
+                ⚗
+            </div>
+
+            <span>
+                BIOLAB
+
+                <small style="color:rgba(255,255,255,0.7)">
+                    DIAGNOSTICS
+                </small>
+
+            </span>
+
+        </div>
+
+
+        <div style="font-size:14px; opacity:0.85;">
+
+            Home · Contact us · About us · Tests · Results
+
+        </div>
+
     </div>
-    <div style="font-size:14px; opacity:0.85;">Home · Contact us · About us · Tests · Results</div>
-  </div>
-  <div class="wrap foot-copy">© 2026 BioLab Diagnostics. All rights reserved.</div>
+
+
+    <div class="wrap foot-copy">
+
+        © 2026 BioLab Diagnostics.
+        All rights reserved.
+
+    </div>
+
 </footer>
- 
+
+
+<!-- MAP + LINKS -->
+
 <script>
-  /* ---------- Fill location + contact info from config.js (LAB_CONFIG) ---------- */
-  if (typeof LAB_CONFIG !== 'undefined') {
-    document.getElementById('labAddress').textContent = LAB_CONFIG.address;
-    document.getElementById('labHours').textContent = LAB_CONFIG.hours;
-    document.getElementById('labPhone').textContent = LAB_CONFIG.phone;
-    document.getElementById('cardPhone').textContent = LAB_CONFIG.phone;
-    document.getElementById('cardHours').textContent = LAB_CONFIG.hours;
-    document.getElementById('cardCall').href = 'tel:' + LAB_CONFIG.phone.replace(/\s+/g, '');
-    document.getElementById('cardEmailText').textContent = LAB_CONFIG.email;
-    document.getElementById('cardEmail').href = 'mailto:' + LAB_CONFIG.email;
- 
-    const query = encodeURIComponent(LAB_CONFIG.mapQuery);
-    document.getElementById('labMapFrame').src = `https://www.google.com/maps?q=${query}&output=embed`;
-    document.getElementById('labDirectionsBtn').href = `https://www.google.com/maps/search/?api=1&query=${query}`;
-  }
- 
-  /* ---------- Simple form submit feedback (no backend wired yet) ---------- */
-  const form = document.getElementById('contactForm');
-  const success = document.getElementById('formSuccess');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    success.classList.add('show');
-    form.reset();
-  });
+
+    // Get data from EJS / Database
+
+    const phone = "<%= labInfo.phone %>";
+
+    const email = "<%= labInfo.email %>";
+
+    const mapQuery = "<%= labInfo.map_query %>";
+
+
+    // Call us
+
+    document.getElementById("cardCall").href =
+        "tel:" + phone.replace(/\s+/g, "");
+
+
+    // Email us
+
+    document.getElementById("cardEmail").href =
+        "mailto:" + email;
+
+
+    // Encode map query
+
+    const query = encodeURIComponent(mapQuery);
+
+
+    // Google Maps iframe
+
+    document.getElementById("labMapFrame").src =
+        `https://www.google.com/maps?q=${query}&output=embed`;
+
+
+    // Get directions
+
+    document.getElementById("labDirectionsBtn").href =
+        `https://www.google.com/maps/search/?api=1&query=${query}`;
+
 </script>
- 
+
+
 </body>
+
 </html>
- 
