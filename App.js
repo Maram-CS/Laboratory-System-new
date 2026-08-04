@@ -2,7 +2,12 @@ import express from "express";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import config_DB from "./Configuration/ConfigDB.js";
+
+// Routers
 import router from "./Router/Public.js";
+import contactRouter from "./Router/createContact.js";
+import infoLabRouter from "./Router/LabIfo.js";
+
 import { config } from "dotenv";
 
 config();
@@ -22,6 +27,8 @@ App.use(express.static(join(__dirname, "/public")));
 
 //Routers
 App.use("/",router);
+App.use("/contact",contactRouter);
+App.use("/lab-info",infoLabRouter);
 
 App.listen(Port,()=>{
     console.log(`Server is running on port: ${Port}`);
