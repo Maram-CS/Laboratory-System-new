@@ -189,7 +189,7 @@
   }
   .accred-row .dash{ color:var(--ink-soft); opacity:.5; }
 
-  /* ---------- Steps ---------- */
+  
   .steps-section{ background:var(--white); border-bottom:1px solid var(--line); }
   .steps-rail{
     position:relative;
