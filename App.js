@@ -8,6 +8,7 @@ import router from "./Router/Public.js";
 import contactRouter from "./Router/createContact.js";
 import infoLabRouter from "./Router/LabIfo.js";
 import labInfoRouter from "./Router/aboutUs.js";
+import userRouter from "./Router/users.js";
 
 import { config } from "dotenv";
 
@@ -31,6 +32,7 @@ App.use("/",router);
 App.use("/contact",contactRouter);
 App.use("/lab-info",infoLabRouter);
 App.use("/",labInfoRouter);
+App.use("/users",userRouter);
 
 App.listen(Port,()=>{
     console.log(`Server is running on port: ${Port}`);
