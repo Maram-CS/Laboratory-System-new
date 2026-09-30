@@ -1,5 +1,5 @@
 import config_DB from "../Configuration/ConfigDB.js";
-import userModel from "../Module/userModel.js";
+import {userModel,login} from "../Module/userModel.js";
 import bcrypt from "bcrypt";
 
 const createUser = async (req,res) => {
@@ -96,6 +96,20 @@ const deleteUser = async (req,res) => {
     }
 };
 
+const userLogin = async (req,res) =>{
+    try {
+        const {email,password} = req.body;
+        const isExist = await login(email,password);
+        if(isExist){
+            res.status(200).json({message: "user Exist"});
+        }else {
+            res.status(400).json({message:"there is no user with this email"});
+        }
+    }catch(err) {
+        console.error("server error!!!");
+    }
+}
 
 
-export { getAllUsers, getUserByEmail, updateUser, deleteUser, createUser };
+
+export { getAllUsers, getUserByEmail, updateUser, deleteUser, createUser,userLogin };

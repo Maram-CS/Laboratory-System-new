@@ -15,4 +15,6 @@ const getLabInfo = async (req, res) => {
     }
 }
 
+
+
 export default getLabInfo;
