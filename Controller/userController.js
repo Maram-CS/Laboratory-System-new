@@ -96,20 +96,7 @@ const deleteUser = async (req,res) => {
     }
 };
 
-const userLogin = async (req,res) =>{
-    try {
-        const {email,password} = req.body;
-        const isExist = await login(email,password);
-        if(isExist){
-            res.status(200).json({message: "user Exist"});
-        }else {
-            res.status(400).json({message:"there is no user with this email"});
-        }
-    }catch(err) {
-        console.error("server error!!!");
-    }
-}
 
 
 
-export { getAllUsers, getUserByEmail, updateUser, deleteUser, createUser,userLogin };
+export { getAllUsers, getUserByEmail, updateUser, deleteUser, createUser };
