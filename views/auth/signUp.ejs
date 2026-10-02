@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Log in — BioLab Diagnostics</title>
+<title>Create your account — BioLab Diagnostics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style/home.css">
 <link rel="stylesheet" href="../style/signUp.css">
-<link rel="stylesheet" href="../style/login.css">
 </head>
 <body>
 
@@ -38,23 +37,28 @@
 
         <aside class="su-aside">
           <div>
-            <span class="eyebrow">Patient account</span>
-            <h2>Welcome back</h2>
-            <p>Log in to read your reports, follow your samples and book your next test.</p>
+            <span class="eyebrow" style="color:rgba(255,255,255,.7);">Patient account</span>
+            <h2>Your results, always within reach</h2>
+            <p>Create a free account to book tests, follow your sample and read your reports securely online.</p>
           </div>
           <ul class="su-perks">
-            <li>Your reports stay private and secure</li>
-            <li>See where your sample is in real time</li>
-            <li>Rebook a test in a few clicks</li>
+            <li>Book lab visits or home collection in a few clicks</li>
+            <li>Follow every sample from received to ready</li>
+            <li>Keep all your reports in one private place</li>
           </ul>
         </aside>
 
         <div class="su-form-wrap">
-          <h1>Log in</h1>
-          <p class="su-sub">New to BioLab? <a href="/register">Create an account</a></p>
+          <h1>Create your account</h1>
+          <p class="su-sub">Already registered? <a href="/login">Log in</a></p>
 
-          <form id="loginForm" method="POST" action="/login" novalidate>
+          <form id="signupForm" method="POST" action="/signUp" novalidate>
             <div class="su-grid">
+              <div class="field full">
+                <label for="userName">Username</label>
+                <input type="text" id="userName" name="userName" autocomplete="username" minlength="3" required>
+                <span class="su-err">Username must be at least 3 characters.</span>
+              </div>
               <div class="field full">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" autocomplete="email" required>
@@ -63,20 +67,26 @@
               <div class="field full">
                 <label for="password">Password</label>
                 <div class="su-pass">
-                  <input type="password" id="password" name="password" autocomplete="current-password" required>
+                  <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required>
                   <button class="su-toggle" type="button" data-target="password">Show</button>
                 </div>
-                <span class="su-err">Enter your password.</span>
+                <div class="su-meter"><i id="meterBar"></i></div>
+                <span class="su-meter-txt" id="meterTxt">Use at least 8 characters.</span>
+                <span class="su-err">Password must be at least 8 characters.</span>
               </div>
-              <div class="lg-row full">
-                <label class="su-check" for="remember">
-                  <input type="checkbox" id="remember" name="remember">
-                  <span>Keep me logged in</span>
-                </label>
-                <a href="/forgotPassword">Forgot password?</a>
+              <div class="field full">
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                  <option value="">Choose your role</option>
+                  <option value="patient">Patient</option>
+                  <option value="doctor">Doctor</option>
+                  <option value="technician">Lab technician</option>
+                </select>
+                <span class="su-err">Select a role.</span>
               </div>
             </div>
-            <button class="btn btn-primary su-submit" type="submit">Log in</button>
+
+            <button class="btn btn-primary su-submit" type="submit">Create account</button>
           </form>
         </div>
 
@@ -97,8 +107,12 @@
 </footer>
 
 <script>
-  const form = document.getElementById('loginForm');
+  const form = document.getElementById('signupForm');
+  const pw = document.getElementById('password');
+  const bar = document.getElementById('meterBar');
+  const txt = document.getElementById('meterTxt');
 
+  // Show / hide password
   document.querySelectorAll('.su-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const input = document.getElementById(btn.dataset.target);
@@ -106,6 +120,25 @@
       input.type = show ? 'text' : 'password';
       btn.textContent = show ? 'Hide' : 'Show';
     });
+  });
+
+  // Password strength meter
+  pw.addEventListener('input', () => {
+    const v = pw.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[A-Z]/.test(v) && /[a-z]/.test(v)) score++;
+    if (/\d/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    const levels = [
+      ['8%', '#c0392b', 'Use at least 8 characters.'],
+      ['25%', '#c0392b', 'Weak'],
+      ['50%', '#e08e0b', 'Fair'],
+      ['75%', '#2e8b57', 'Good'],
+      ['100%', '#1e6b3a', 'Strong']
+    ];
+    const l = v ? levels[score] : ['0%', '#c0392b', 'Use at least 8 characters.'];
+    bar.style.width = l[0]; bar.style.background = l[1]; txt.textContent = l[2];
   });
 
   function setInvalid(input, bad) {
@@ -116,14 +149,16 @@
   form.addEventListener('submit', (e) => {
     const f = form.elements;
     const ok = [
+      setInvalid(f.userName, f.userName.value.trim().length < 3),
       setInvalid(f.email, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())),
-      setInvalid(f.password, !f.password.value)
+      setInvalid(f.password, f.password.value.length < 8),
+      setInvalid(f.role, !f.role.value)
     ].every(Boolean);
     if (!ok) {
       e.preventDefault();
-      form.querySelector('.invalid input').focus();
+      form.querySelector('.invalid input, .invalid select').focus();
     }
-    // If valid, the form is posted to /login (handle it in Express)
+    // If valid, the form is posted to /signUp (handle it in Express)
   });
 </script>
 

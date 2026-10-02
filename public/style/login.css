@@ -1,0 +1,4 @@
+/* Login-only extras — the rest comes from home.css and signUp.css */
+.lg-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.lg-row a{color:var(--teal-deep);font-weight:600;font-size:13px}
+.lg-row a:hover{text-decoration:underline}
