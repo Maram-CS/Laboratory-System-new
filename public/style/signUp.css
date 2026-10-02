@@ -1,0 +1,240 @@
+/* Sign-up page styles.
+   Colors, fonts, .field, .btn, and .eyebrow are defined in home.css.
+*/
+
+.su-section {
+  padding: 56px 0 80px;
+}
+
+.su-card {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 30px 60px -30px rgba(19, 28, 43, 0.3);
+}
+
+.su-aside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 40px;
+  color: var(--white);
+  background:
+    linear-gradient(160deg, rgba(27, 59, 111, 0.93), rgba(44, 95, 168, 0.8)),
+    url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=900&q=80') center/cover;
+}
+
+.su-aside .eyebrow {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.su-aside .eyebrow::before {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.su-aside h2 {
+  margin: 14px 0;
+  color: var(--white);
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.su-aside p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.su-perks {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.su-perks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.su-perks li::before {
+  content: '✓';
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--amber);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.su-form-wrap {
+  padding: 48px 44px;
+}
+
+.su-form-wrap h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.su-sub {
+  margin: 0 0 28px;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+.su-sub a,
+.su-check a {
+  color: var(--teal-deep);
+  font-weight: 600;
+}
+
+.su-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.su-grid .full {
+  grid-column: 1 / -1;
+}
+
+.su-form-wrap .field input:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 4px rgba(44, 95, 168, 0.15);
+}
+
+.su-form-wrap .field.invalid input {
+  border-color: #c0392b;
+}
+
+.su-err {
+  display: none;
+  margin-top: 6px;
+  color: #c0392b;
+  font-size: 12px;
+}
+
+.invalid > .su-err,
+.invalid .su-err {
+  display: block;
+}
+
+.su-pass {
+  position: relative;
+}
+
+.su-pass input {
+  padding-right: 64px;
+}
+
+.su-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--teal-deep);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.su-toggle:focus-visible {
+  outline: 2px solid var(--teal-bright);
+}
+
+.su-meter {
+  height: 4px;
+  margin-top: 10px;
+  border-radius: 4px;
+  background: var(--bg-deep);
+  overflow: hidden;
+}
+
+.su-meter i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: #c0392b;
+  transition: width 0.25s, background 0.25s;
+}
+
+.su-meter-txt {
+  display: block;
+  min-height: 16px;
+  margin-top: 6px;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.su-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.su-check input {
+  margin-top: 3px;
+  accent-color: var(--teal-deep);
+}
+
+.su-submit {
+  width: 100%;
+  height: 48px;
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.su-msg {
+  display: none;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #e8f5ec;
+  color: #1e6b3a;
+  font-size: 14px;
+}
+
+@media (max-width: 860px) {
+  .su-card {
+    grid-template-columns: 1fr;
+  }
+
+  .su-aside {
+    padding: 36px 28px;
+  }
+
+  .su-form-wrap {
+    padding: 36px 24px;
+  }
+}
+
+@media (max-width: 520px) {
+  .su-grid {
+    grid-template-columns: 1fr;
+  }
+}

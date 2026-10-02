@@ -1,4 +1,3 @@
-
 import { login } from "../Module/userModel.js";
 import config_DB from "../Configuration/ConfigDB.js";
 import { config } from "dotenv";
