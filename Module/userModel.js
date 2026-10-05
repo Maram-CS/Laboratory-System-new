@@ -20,25 +20,21 @@ const userModel = async (userName,email,password,role) => {
 const login = async (email,password) => {
 
     try {
-        const userPasswordInDB = "select password,id,role from users where email=?";
-        const [result] = await config_DB.execute(userPasswordInDB,[email]);
+        const userInDB = "select password,id,role from users where email=?";
+        const [result] = await config_DB.execute(userInDB,[email]);
         if(result.length === 0) {
             return false;
         }else {
-        const user = result[0];
-        const hashedPassword = user.password;
+        const hashedPassword = result[0].password;
         const isUserAllowed = await bcrypt.compare(password,hashedPassword);
         if(isUserAllowed) {
-            console.log("user is allowed");
-            return user;
+            return {id: result[0].id, role: result[0].role};
         }else {
-            console.log("user is not allowed");
-            throw new Error("your password is not correct");
+            return null;
         }
     }
     }catch(err) {
         console.error(err);
-        throw err;
     }
 }
 

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — BioLab Diagnostics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style/home.css">
+<link rel="stylesheet" href="../style/adminDash.css">
+</head>
+<body>
+<%
+  // labInfo can be an object or an array of rows; contacts is an array of messages
+  const info = (typeof labInfo !== 'undefined' && labInfo) ? (Array.isArray(labInfo) ? (labInfo[0] || {}) : labInfo) : {};
+  const msgs = (typeof contacts !== 'undefined' && Array.isArray(contacts)) ? contacts : [];
+  const today = new Date().toDateString();
+  const todayCount = msgs.filter(m => m.created_at && new Date(m.created_at).toDateString() === today).length;
+%>
+
+<div class="ad-layout">
+
+  <aside class="ad-side">
+    <div class="logo">
+      <div class="logo-mark">⚗</div>
+      <span>BIOLAB<small>ADMIN</small></span>
+    </div>
+    <ul class="ad-menu">
+      <li><button class="ad-link active" data-tab="overview" type="button">📊 Overview</button></li>
+      <li><button class="ad-link" data-tab="labinfo" type="button">🏥 Lab information</button></li>
+      <li><button class="ad-link" data-tab="messages" type="button">✉️ Messages <span class="ad-count"><%= msgs.length %></span></button></li>
+    </ul>
+    <a class="ad-out" href="/home">← Back to site</a>
+  </aside>
+
+  <main class="ad-main">
+    <div class="ad-top">
+      <div>
+        <span class="eyebrow">admin panel</span>
+        <h1 id="adTitle">Overview</h1>
+      </div>
+      <a class="btn btn-primary" href="/home">Log out</a>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="ad-panel active" id="tab-overview">
+      <div class="ad-stats">
+        <div class="ad-stat"><div class="n"><%= msgs.length %></div><div class="l">Total messages</div></div>
+        <div class="ad-stat"><div class="n"><%= todayCount %></div><div class="l">Received today</div></div>
+        <div class="ad-stat"><div class="t"><%= info.phone || '—' %></div><div class="l">Lab phone</div></div>
+        <div class="ad-stat"><div class="t"><%= info.email || '—' %></div><div class="l">Lab email</div></div>
+      </div>
+      <div class="ad-card">
+        <h3>Latest messages</h3>
+        <% if (msgs.length === 0) { %>
+          <p class="ad-empty">No messages yet.</p>
+        <% } else { %>
+          <ul class="ad-latest">
+            <% msgs.slice(0, 5).forEach(m => { %>
+              <li><strong><%= m.full_name %></strong><span><%= m.subject %></span></li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- LAB INFO -->
+    <div class="ad-panel" id="tab-labinfo">
+      <div class="ad-card">
+        <h3>Contact information shown on the site</h3>
+        <form id="labForm" novalidate>
+          <div class="ad-grid">
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input type="text" id="phone" name="phone" value="<%= info.phone || '' %>" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" value="<%= info.email || '' %>" required>
+            </div>
+            <div class="field full">
+              <label for="address">Address</label>
+              <input type="text" id="address" name="address" value="<%= info.address || '' %>" required>
+            </div>
+            <div class="field full">
+              <label for="opening_hours">Opening hours</label>
+              <input type="text" id="opening_hours" name="opening_hours" value="<%= info.opening_hours || '' %>" required>
+            </div>
+            <div class="field full">
+              <label for="map_query">Map query</label>
+              <input type="text" id="map_query" name="map_query" value="<%= info.map_query || '' %>" placeholder="e.g. BioLab Constantine">
+            </div>
+          </div>
+          <button class="btn btn-primary ad-save" type="submit">Save changes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="ad-panel" id="tab-messages">
+      <div class="ad-card">
+        <h3>Contact messages</h3>
+        <% if (msgs.length === 0) { %>
+          <p class="ad-empty">No messages yet.</p>
+        <% } else { %>
+          <div class="ad-table-wrap">
+            <table class="ad-table">
+              <thead>
+                <tr><th>Name</th><th>Contact</th><th>Subject</th><th>Date</th><th></th></tr>
+              </thead>
+              <tbody>
+                <% msgs.forEach((m, i) => { %>
+                  <tr>
+                    <td><%= m.full_name %></td>
+                    <td><%= m.email %><br><small><%= m.phone %></small></td>
+                    <td><%= m.subject %></td>
+                    <td><%= m.created_at ? new Date(m.created_at).toLocaleDateString('en-GB') : '—' %></td>
+                    <td><button class="ad-view" type="button" data-row="<%= i %>">View</button></td>
+                  </tr>
+                  <tr class="ad-msg-row" id="msg-<%= i %>">
+                    <td colspan="5"><div class="ad-msg"><%= m.message %></div></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="ad-toast" id="adToast" role="status"></div>
+
+<script>
+  // Tabs
+  const titles = { overview:'Overview', labinfo:'Lab information', messages:'Messages' };
+  document.querySelectorAll('.ad-link').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ad-link').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.ad-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      document.getElementById('adTitle').textContent = titles[btn.dataset.tab];
+    });
+  });
+
+  // Expand / collapse a message
+  document.querySelectorAll('.ad-view').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = document.getElementById('msg-' + btn.dataset.row);
+      const open = row.classList.toggle('open');
+      btn.textContent = open ? 'Hide' : 'View';
+    });
+  });
+
+  // Toast
+  const toast = document.getElementById('adToast');
+  function showToast(text, ok = true) {
+    toast.textContent = text;
+    toast.className = 'ad-toast show ' + (ok ? 'ok' : 'err');
+    setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  // Save lab info -> PUT /admin/labInfo (change the URL to your real route)
+  document.getElementById('labForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = e.target.elements;
+    if (!f.phone.value.trim() || !f.email.value.trim() || !f.address.value.trim() || !f.opening_hours.value.trim()) {
+      return showToast('Please fill all required fields.', false);
+    }
+    const body = {
+      phone: f.phone.value.trim(),
+      email: f.email.value.trim(),
+      address: f.address.value.trim(),
+      opening_hours: f.opening_hours.value.trim(),
+      map_query: f.map_query.value.trim()
+    };
+    try {
+      const res = await fetch('/admin/labInfo', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      showToast(data.message || 'Saved', res.ok);
+    } catch (err) {
+      showToast('Server error, try again.', false);
+    }
+  });
+</script>
+
+</body>
+</html>
