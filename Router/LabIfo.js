@@ -3,8 +3,10 @@ import { getInfoLab, crateLabInfo, updateLabInfo  } from "../Controller/infoLabC
 
 const infoLabRouter = Router();
 
-infoLabRouter.get("/get",getInfoLab);
+
+infoLabRouter.get("/adminDash",getInfoLab);
+infoLabRouter.get("/contactUs",getInfoLab);
 infoLabRouter.post("/create",crateLabInfo);
-infoLabRouter.put("/update",updateLabInfo);
+infoLabRouter.post("/update",updateLabInfo);
 
 export default infoLabRouter ;

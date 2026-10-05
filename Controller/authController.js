@@ -25,8 +25,9 @@ const userLogin = async (req,res) =>{
              res.cookie("jwt",token,{httpOnly:true,maxAge:3*24*60*60*1000});
             //res.status(200).json({message:"login successful"});
             if(isExist.role === "admin"){
-                return res.redirect("/adminDash");
+            return res.redirect("/adminDash");
             }
+
             return res.redirect("/home");
         
 

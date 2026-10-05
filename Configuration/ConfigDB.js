@@ -3,21 +3,25 @@ import { config } from "dotenv";
 
 config();
 
-const config_DB = mysql.createPool({
-    host : process.env.DB_HOST,
-    user : process.env.DB_USER,
-    password : process.env.DB_PASSWORD,
-    database : process.env.DB_NAME,
-    port : process.env.DB_PORT
+const configDB = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: Number(process.env.DB_PORT) || 3306,
 });
 
-try {
-    const connection = await config_DB.getConnection();
-
+const verifyConnection = async () => {
+  try {
+    const connection = await configDB.getConnection();
     console.log("✅ MySQL connected successfully");
-    connection.release(); //adi trj3lna connection ll pool
-}catch (err) {
+    connection.release();
+  } catch (error) {
     console.error("❌ MySQL connection failed:");
-    console.error(err.message);
-}
-export default config_DB;
+    console.error(error.message);
+  }
+};
+
+verifyConnection();
+
+export default configDB;
