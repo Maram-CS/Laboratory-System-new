@@ -10,10 +10,10 @@
 <link rel="stylesheet" href="../style/adminDash.css">
 </head>
 <body>
+
 <%
   // labInfo can be an object or an array of rows; contacts is an array of messages
   const info = (typeof labInfo !== 'undefined' && labInfo) ? (Array.isArray(labInfo) ? (labInfo[0] || {}) : labInfo) : {};
-  const msgs = (typeof contacts !== 'undefined' && Array.isArray(contacts)) ? contacts : [];
   const today = new Date().toDateString();
   const todayCount = msgs.filter(m => m.created_at && new Date(m.created_at).toDateString() === today).length;
 %>
@@ -47,8 +47,8 @@
       <div class="ad-stats">
         <div class="ad-stat"><div class="n"><%= msgs.length %></div><div class="l">Total messages</div></div>
         <div class="ad-stat"><div class="n"><%= todayCount %></div><div class="l">Received today</div></div>
-        <div class="ad-stat"><div class="t"><%= info.phone || '—' %></div><div class="l">Lab phone</div></div>
-        <div class="ad-stat"><div class="t"><%= info.email || '—' %></div><div class="l">Lab email</div></div>
+        <div class="ad-stat"><div class="t"><%= labInfo.phone || '—' %></div><div class="l">Lab phone</div></div>
+        <div class="ad-stat"><div class="t"><%= labInfo.email || '—' %></div><div class="l">Lab email</div></div>
       </div>
       <div class="ad-card">
         <h3>Latest messages</h3>
@@ -68,68 +68,128 @@
     <div class="ad-panel" id="tab-labinfo">
       <div class="ad-card">
         <h3>Contact information shown on the site</h3>
-        <form id="labForm" novalidate>
+        <form id="labForm" novalidate action="/lab-info/update" method="POST">
           <div class="ad-grid">
             <div class="field">
               <label for="phone">Phone</label>
-              <input type="text" id="phone" name="phone" value="<%= info.phone || '' %>" required>
+              <input type="text" id="phone" name="phone" value="<%= labInfo.phone || '' %>" required>
             </div>
             <div class="field">
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" value="<%= info.email || '' %>" required>
+              <input type="email" id="email" name="email" value="<%= labInfo.email || '' %>" required>
             </div>
             <div class="field full">
               <label for="address">Address</label>
-              <input type="text" id="address" name="address" value="<%= info.address || '' %>" required>
+              <input type="text" id="address" name="address" value="<%= labInfo.address || '' %>" required>
             </div>
             <div class="field full">
               <label for="opening_hours">Opening hours</label>
-              <input type="text" id="opening_hours" name="opening_hours" value="<%= info.opening_hours || '' %>" required>
+              <input type="text" id="opening_hours" name="opening_hours" value="<%= labInfo.opening_hours || '' %>" required>
             </div>
             <div class="field full">
               <label for="map_query">Map query</label>
-              <input type="text" id="map_query" name="map_query" value="<%= info.map_query || '' %>" placeholder="e.g. BioLab Constantine">
+              <input type="text" id="map_query" name="map_query" value="<%= labInfo.map_query || '' %>" placeholder="e.g. BioLab Constantine">
             </div>
           </div>
           <button class="btn btn-primary ad-save" type="submit">Save changes</button>
         </form>
       </div>
     </div>
+<!-- MESSAGES -->
 
-    <!-- MESSAGES -->
-    <div class="ad-panel" id="tab-messages">
-      <div class="ad-card">
+<div class="ad-panel" id="tab-messages">
+
+    <div class="ad-card">
+
         <h3>Contact messages</h3>
-        <% if (msgs.length === 0) { %>
-          <p class="ad-empty">No messages yet.</p>
-        <% } else { %>
-          <div class="ad-table-wrap">
-            <table class="ad-table">
-              <thead>
-                <tr><th>Name</th><th>Contact</th><th>Subject</th><th>Date</th><th></th></tr>
-              </thead>
-              <tbody>
-                <% msgs.forEach((m, i) => { %>
-                  <tr>
-                    <td><%= m.full_name %></td>
-                    <td><%= m.email %><br><small><%= m.phone %></small></td>
-                    <td><%= m.subject %></td>
-                    <td><%= m.created_at ? new Date(m.created_at).toLocaleDateString('en-GB') : '—' %></td>
-                    <td><button class="ad-view" type="button" data-row="<%= i %>">View</button></td>
-                  </tr>
-                  <tr class="ad-msg-row" id="msg-<%= i %>">
-                    <td colspan="5"><div class="ad-msg"><%= m.message %></div></td>
-                  </tr>
-                <% }) %>
-              </tbody>
-            </table>
-          </div>
-        <% } %>
-      </div>
-    </div>
-  </main>
-</div>
 
+        <% if (!msgs || msgs.length === 0) { %>
+
+            <p class="ad-empty">No messages yet.</p>
+
+        <% } else { %>
+
+            <div class="ad-table-wrap">
+
+                <table class="ad-table">
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <% msgs.forEach((m, i) => { %>
+
+                            <tr>
+
+                                <td>
+                                    <%= m.full_name %>
+                                </td>
+
+                                <td>
+                                    <%= m.email %>
+                                    <br>
+                                    <small>
+                                        <%= m.phone %>
+                                    </small>
+                                </td>
+
+                                <td>
+                                    <%= m.subject %>
+                                </td>
+
+                                <td>
+                                    <%= m.created_at
+                                        ? new Date(m.created_at).toLocaleDateString('en-GB')
+                                        : '—'
+                                    %>
+                                </td>
+
+                                <td>
+                                    <button
+                                        class="ad-view"
+                                        type="button"
+                                        data-row="<%= i %>">
+                                        View
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr
+                                class="ad-msg-row"
+                                id="msg-<%= i %>">
+
+                                <td colspan="5">
+
+                                    <div class="ad-msg">
+                                        <%= m.message %>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
 <div class="ad-toast" id="adToast" role="status"></div>
 
 <script>
@@ -163,7 +223,7 @@
   }
 
   // Save lab info -> PUT /admin/labInfo (change the URL to your real route)
-  document.getElementById('labForm').addEventListener('submit', async (e) => {
+  /*document.getElementById('labForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const f = e.target.elements;
     if (!f.phone.value.trim() || !f.email.value.trim() || !f.address.value.trim() || !f.opening_hours.value.trim()) {
@@ -187,7 +247,7 @@
     } catch (err) {
       showToast('Server error, try again.', false);
     }
-  });
+  });*/
 </script>
 
 </body>

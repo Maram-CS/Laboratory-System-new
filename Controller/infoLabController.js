@@ -2,18 +2,45 @@ import {infoLabModel , createInfoLab } from "../Module/infoLabModel.js";
 import config_DB from "../Configuration/ConfigDB.js";
 
 const getInfoLab = async (req,res) => {
-    try{
+    try {
+        // Get lab information
         const labInfo = await infoLabModel();
-        if(!labInfo){
-            return res.status(404).json({ message:" Lab information not found" });
-        }else{
-            res.render("auth/contactUs",{labInfo});
+
+        // Get contact messages
+        const sql = "SELECT * FROM CONTACTS ORDER BY created_at DESC";
+        const [msgs] = await config_DB.execute(sql);
+                console.log("PATH:", req.path);
+        console.log("MSGS LENGTH:", msgs.length);
+
+        // Count today's messages
+        const today = new Date();
+
+        const todayCount = msgs.filter(msg => {
+            const msgDate = new Date(msg.created_at);
+            return msgDate.toDateString() === today.toDateString();
+        }).length;
+        if(req.path === "/adminDash") {
+        return res.render("auth/adminDash", {
+            labInfo,
+            msgs,
+            todayCount
+        });
+    }
+        if(req.path === "/contactUs") {
+            return res.render("auth/contactUs", {
+                labInfo,
+            });
         }
-    }catch(err){
-        console.error(err);
-        return res.status(500).json({message:" server error"});
+
+    } catch (err) {
+        console.error("Error retrieving admin dashboard:", err);
+
+        return res.status(500).json({
+            message: "Internal server error"
+        });
     }
 };
+    
 
 const crateLabInfo = async (req,res) => {
     try {
