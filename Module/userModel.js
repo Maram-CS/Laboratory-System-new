@@ -20,18 +20,17 @@ const userModel = async (userName,email,password,role) => {
 const login = async (email,password) => {
 
     try {
-        const userPasswordInDB = "select password from users where email=?";
-        const [result] = await config_DB.execute(userPasswordInDB,[email]);
+        const userInDB = "select password,id,role from users where email=?";
+        const [result] = await config_DB.execute(userInDB,[email]);
         if(result.length === 0) {
             return false;
         }else {
-
         const hashedPassword = result[0].password;
         const isUserAllowed = await bcrypt.compare(password,hashedPassword);
         if(isUserAllowed) {
-            return true;
+            return {id: result[0].id, role: result[0].role};
         }else {
-            return false;
+            return null;
         }
     }
     }catch(err) {

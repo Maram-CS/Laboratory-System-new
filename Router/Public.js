@@ -20,4 +20,7 @@ router.get("/register",(req,res)=>{
     res.render("auth/signUp");
 });
 
+router.get("/adminDash",(req,res)=>{
+    res.render("auth/adminDash");
+});
 export default router;
