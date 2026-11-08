@@ -24,4 +24,8 @@ router.get("/adminDash",(req,res)=>{
     res.render("auth/adminDash");
 });
 
+router.get("/patientDash",(req,res)=>{
+    res.render("auth/patientDash");
+});
+
 export default router;

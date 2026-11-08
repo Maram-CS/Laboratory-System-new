@@ -26,7 +26,15 @@ const userLogin = async (req,res) =>{
             //res.status(200).json({message:"login successful"});
             if(isExist.role === "admin"){
             return res.redirect("/adminDash");
-            }
+        } else if(isExist.role === "patient"){
+            return res.redirect("/patientDash");
+        } else if(isExist.role === "doctor"){
+            return res.redirect("/doctorDash");
+        } else if(isExist.role === "lab"){
+            return res.redirect("/labDash");
+        } else {
+            return res.status(400).json({message:"invalid role"});
+        }
 
             return res.redirect("/home");
         

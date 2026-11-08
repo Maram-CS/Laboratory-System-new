@@ -403,3 +403,13 @@
     .results-grid{ grid-template-columns:1fr 1fr; row-gap:24px; }
     nav ul{ display:none; }
   }
+
+  /* Space between Booking Bar and Quick Test Panels */
+.panels-strip {
+    padding-top: 35px;
+    padding-bottom: 40px;
+}
+
+.booking-bar {
+    margin-bottom: 0;
+}

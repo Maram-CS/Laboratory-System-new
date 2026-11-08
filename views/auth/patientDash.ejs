@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard — BioLab Diagnostics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style/home.css">
+  <link rel="stylesheet" href="/style/patientDash.css">
+</head>
+<body>
+  <%
+    const patient = {
+      firstName: 'Amine',
+      lastName: 'Benali',
+      patientId: 'P-20418',
+      initials: 'AB'
+    };
+
+    const currentHour = new Date().getHours();
+    const greeting = currentHour < 12 ? 'Good morning' : currentHour < 18 ? 'Good afternoon' : 'Good evening';
+
+    const stats = [
+      { icon: '🧪', value: 14, label: 'Total tests' },
+      { icon: '📄', value: 2, label: 'Reports ready' },
+      { icon: '⏳', value: 1, label: 'In progress' },
+      { icon: '📅', value: 1, label: 'Upcoming visit' }
+    ];
+
+    const results = [
+      { name: 'Thyroid hormone panel', id: 'BL-240921', status: 'processing', date: '06 Nov 2026', downloadable: false },
+      { name: 'Complete blood count', id: 'BL-240874', status: 'ready', date: '29 Oct 2026', downloadable: true },
+      { name: 'Vitamin D & B12', id: 'BL-240802', status: 'ready', date: '14 Oct 2026', downloadable: true },
+      { name: 'HbA1c (glycated hemoglobin)', id: 'BL-240511', status: 'ready', date: '02 Aug 2026', downloadable: true }
+    ];
+
+    const healthIndicators = [
+      { name: 'Hemoglobin', value: '14.2 g/dL', rangeStart: 30, rangeWidth: 40, mark: 52, note: 'Normal range 13.0 – 17.0', warn: false },
+      { name: 'Fasting glucose', value: '0.98 g/L', rangeStart: 25, rangeWidth: 35, mark: 48, note: 'Normal range 0.70 – 1.10', warn: false },
+      { name: 'Vitamin D', value: '19 ng/mL', rangeStart: 45, rangeWidth: 40, mark: 30, note: 'Below the usual range of 30 – 100 · talk to your doctor', warn: true }
+    ];
+
+    const appointments = [
+      { day: 12, month: 'Nov', title: 'Blood panel', detail: 'Home collection · 09:00–11:00' },
+      { day: 28, month: 'Nov', title: 'Follow-up: Vitamin D', detail: 'At the lab · 10:15' }
+    ];
+
+    const quickActions = [
+      { icon: '🩸', label: 'Book a test' },
+      { icon: '🏠', label: 'Home collection' },
+      { icon: '👤', label: 'My profile' },
+      { icon: '💬', label: 'Contact the lab' }
+    ];
+  %>
+
+  <header>
+    <div class="wrap nav">
+      <div class="logo">
+        <div class="logo-mark">⚗</div>
+        <span>BIOLAB<small>DIAGNOSTICS</small></span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/dashboard" class="active">Dashboard</a></li>
+          <li><a href="#results">My results</a></li>
+          <li><a href="#appointments">Appointments</a></li>
+          <li><a href="/contactUs">Contact us</a></li>
+        </ul>
+      </nav>
+      <div class="user-chip">
+        <div class="avatar" id="avatar"><%= patient.initials %></div>
+        <div class="who">
+          <span id="userName"><%= patient.firstName %> <%= patient.lastName %></span>
+          <small>Patient ID · <%= patient.patientId %></small>
+        </div>
+        <button class="btn btn-ghost" onclick="window.location.href='/home'">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash">
+    <div class="wrap">
+      <div class="welcome">
+        <div>
+          <span class="eyebrow">Patient dashboard</span>
+          <h1>
+            <span id="greeting"><%= greeting %></span>,<br>
+            <em id="firstName"><%= patient.firstName %></em>
+          </h1>
+          <p>You have 2 reports ready to download and 1 sample still being analyzed.</p>
+          <div class="welcome-actions">
+            <button class="btn btn-gold" onclick="window.location.href='/login'">Book a test</button>
+            <button class="btn btn-glass" onclick="document.getElementById('results').scrollIntoView()">View my results</button>
+          </div>
+        </div>
+        <div class="next-appt">
+          <div class="lbl">Next appointment</div>
+          <div class="date">Tue, 12 Nov</div>
+          <div class="meta">09:30 · Blood panel<br>Home collection · nurse arrives 09:00–11:00</div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <% stats.forEach((stat) => { %>
+          <div class="stat">
+            <div class="ico"><%= stat.icon %></div>
+            <div>
+              <div class="val"><%= stat.value %></div>
+              <div class="name"><%= stat.label %></div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+
+      <div class="dash-grid">
+        <div class="stack">
+          <div class="card" id="results">
+            <div class="card-head">
+              <h2>My results</h2>
+              <div class="tabs" role="tablist" aria-label="Filter results">
+                <button class="tab on" data-filter="all" role="tab">All</button>
+                <button class="tab" data-filter="ready" role="tab">Ready</button>
+                <button class="tab" data-filter="processing" role="tab">In progress</button>
+              </div>
+            </div>
+
+            <div class="tbl-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Test</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="resultsBody">
+                  <% results.forEach((result) => { %>
+                    <tr data-status="<%= result.status %>">
+                      <td>
+                        <div class="t-name"><%= result.name %></div>
+                        <div class="t-id"><%= result.id %></div>
+                      </td>
+                      <td><%= result.date %></td>
+                      <td>
+                        <span class="pill <%= result.status %>">
+                          <%= result.status === 'ready' ? 'Ready' : 'Processing' %>
+                        </span>
+                      </td>
+                      <td>
+                        <button class="btn btn-primary btn-sm" <%= result.downloadable ? '' : 'disabled' %> >Download</button>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <div class="empty" id="emptyMsg">No results in this category yet.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h2>Latest health indicators</h2>
+              <span class="eyebrow">from 29 Oct report</span>
+            </div>
+
+            <% healthIndicators.forEach((indicator) => { %>
+              <div class="indicator">
+                <div class="ind-top">
+                  <b><%= indicator.name %></b>
+                  <span><%= indicator.value %></span>
+                </div>
+                <div class="range">
+                  <div class="ok" style="left:<%= indicator.rangeStart %>%; width:<%= indicator.rangeWidth %>%"></div>
+                  <div class="mark <%= indicator.warn ? 'warn' : '' %>" style="left:<%= indicator.mark %>%"></div>
+                </div>
+                <div class="ind-note"><%= indicator.note %></div>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="mini-track">
+            <h2>Sample in progress</h2>
+            <div class="oid">BL-240921 · Thyroid hormone panel</div>
+            <div class="rail">
+              <div class="stage done"><div class="stage-dot"></div><span class="stage-label">Received</span><span class="stage-time">08:12</span></div>
+              <div class="stage active"><div class="stage-dot"></div><span class="stage-label">Processing</span><span class="stage-time">09:40</span></div>
+              <div class="stage"><div class="stage-dot"></div><span class="stage-label">Verified</span><span class="stage-time">—</span></div>
+              <div class="stage"><div class="stage-dot"></div><span class="stage-label">Ready</span><span class="stage-time">—</span></div>
+            </div>
+          </div>
+
+          <div class="card" id="appointments">
+            <div class="card-head">
+              <h2>Appointments</h2>
+              <a href="/login" class="link">Book new</a>
+            </div>
+
+            <% appointments.forEach((appointment) => { %>
+              <div class="appt">
+                <div class="day"><%= appointment.day %><small><%= appointment.month %></small></div>
+                <div class="info"><%= appointment.title %><small><%= appointment.detail %></small></div>
+              </div>
+            <% }); %>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h2>Quick actions</h2></div>
+            <div class="actions">
+              <% quickActions.forEach((action) => { %>
+                <button class="action">
+                  <span class="ico"><%= action.icon %></span><%= action.label %>
+                </button>
+              <% }); %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-grid">
+      <div class="logo">
+        <div class="logo-mark">⚗</div>
+        <span>BIOLAB<small style="color:rgba(255,255,255,0.7)">DIAGNOSTICS</small></span>
+      </div>
+      <div style="font-size:14px; opacity:0.85;">Dashboard · My results · Appointments · Contact us</div>
+    </div>
+    <div class="wrap foot-copy">© 2026 BioLab Diagnostics. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const rows = document.querySelectorAll('#resultsBody tr');
+    const emptyMsg = document.getElementById('emptyMsg');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((item) => item.classList.remove('on'));
+        tab.classList.add('on');
+
+        const filter = tab.dataset.filter;
+        let visibleRows = 0;
+
+        rows.forEach((row) => {
+          const shouldShow = filter === 'all' || row.dataset.status === filter;
+          row.style.display = shouldShow ? '' : 'none';
+
+          if (shouldShow) visibleRows += 1;
+        });
+
+        emptyMsg.style.display = visibleRows ? 'none' : 'block';
+      });
+    });
+  </script>
+</body>
+</html>
