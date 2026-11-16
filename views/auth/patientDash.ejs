@@ -71,8 +71,8 @@
       <div class="user-chip">
         <div class="avatar" id="avatar"><%= patient.initials %></div>
         <div class="who">
-          <span id="userName"><%= patient.firstName %> <%= patient.lastName %></span>
-          <small>Patient ID · <%= patient.patientId %></small>
+          <span id="userName"><%= user.USERNAME %></span>
+          <small>Patient ID · <%= user.id %></small>
         </div>
         <button class="btn btn-ghost" onclick="window.location.href='/home'">Log out</button>
       </div>
@@ -86,7 +86,7 @@
           <span class="eyebrow">Patient dashboard</span>
           <h1>
             <span id="greeting"><%= greeting %></span>,<br>
-            <em id="firstName"><%= patient.firstName %></em>
+            <em id="firstName"><%= user.USERNAME %></em>
           </h1>
           <p>You have 2 reports ready to download and 1 sample still being analyzed.</p>
           <div class="welcome-actions">

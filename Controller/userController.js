@@ -56,6 +56,19 @@ const getUserByEmail = async (req, res) => {
   }
 };
 
+const getUserById = async (id) => {
+  try {
+    const sql = "SELECT * FROM USERS WHERE id=?";
+    const [result] = await configDB.execute(sql, [id]);
+    if (result.length === 0) {
+      throw new Error("User not found");
+    }
+    return result[0];
+  }catch (error) {
+   throw error;
+  }
+}
+
 const updateUser = async (req, res) => {
   try {
     const { userName, email, password, role } = req.body;
@@ -109,5 +122,5 @@ const userLogin = async (req, res) => {
   }
 };
 
-export { getAllUsers, getUserByEmail, updateUser, deleteUser, createUser, userLogin };
+export { getAllUsers, getUserByEmail, updateUser, deleteUser, createUser, userLogin, getUserById };
 
